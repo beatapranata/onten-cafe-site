@@ -1,0 +1,218 @@
+{
+  "_comment": "Onten Cafe palette. Provenance for every token is in design/SYSTEM.md. Run: npm run contrast",
+  "tokens": {
+    "paper": "#fcfbf8",
+    "paper-alt": "#f3ede5",
+    "ink": "#2d302e",
+    "ink-deep": "#1f2321",
+    "muted": "#5a5e5a",
+    "sage": "#b7cdb9",
+    "sage-deep": "#3b654a",
+    "mocha": "#dcc6ae",
+    "mocha-deep": "#77533a",
+    "glass-over-paper": "#fefdfc",
+    "glass-over-paper-alt": "#f9f6f3",
+    "glass-over-sage": "#dce7dd",
+    "glass-over-mocha": "#eee4d8",
+    "glass-dark": "#313533",
+    "nav-glass-over-ink-deep": "#d2d3d3",
+    "glass-dark-over-orb": "#4d544e",
+    "glass-photo-worst": "#dbdbdb",
+    "glass-photo-ink-worst": "#a8a8a8"
+  },
+  "grounds": [
+    "paper",
+    "paper-alt",
+    "ink-deep",
+    "glass-over-sage",
+    "glass-over-mocha",
+    "glass-dark",
+    "sage",
+    "mocha",
+    "nav-glass-over-ink-deep",
+    "glass-dark-over-orb",
+    "glass-photo-worst",
+    "glass-photo-ink-worst"
+  ],
+  "composites": [
+    {
+      "name": "on-dark-muted",
+      "fg": "#fcfbf8",
+      "alpha": 0.74,
+      "over": "ink-deep"
+    },
+    {
+      "name": "on-glass-dark-muted",
+      "fg": "#fcfbf8",
+      "alpha": 0.74,
+      "over": "glass-dark"
+    },
+    {
+      "name": "hairline-light",
+      "fg": "#2d302e",
+      "alpha": 0.14,
+      "over": "paper"
+    },
+    {
+      "name": "on-glass-dark-over-orb-muted",
+      "fg": "#fcfbf8",
+      "alpha": 0.74,
+      "over": "glass-dark-over-orb"
+    }
+  ],
+  "pairs": [
+    {
+      "fg": "ink",
+      "bg": "paper",
+      "size": "body"
+    },
+    {
+      "fg": "ink",
+      "bg": "paper-alt",
+      "size": "body"
+    },
+    {
+      "fg": "muted",
+      "bg": "paper",
+      "size": "body"
+    },
+    {
+      "fg": "muted",
+      "bg": "paper-alt",
+      "size": "body"
+    },
+    {
+      "fg": "sage-deep",
+      "bg": "paper",
+      "size": "body"
+    },
+    {
+      "fg": "sage-deep",
+      "bg": "paper-alt",
+      "size": "body"
+    },
+    {
+      "fg": "mocha-deep",
+      "bg": "paper",
+      "size": "body"
+    },
+    {
+      "fg": "mocha-deep",
+      "bg": "paper-alt",
+      "size": "body"
+    },
+    {
+      "fg": "ink",
+      "bg": "glass-over-sage",
+      "size": "body"
+    },
+    {
+      "fg": "ink",
+      "bg": "glass-over-mocha",
+      "size": "body"
+    },
+    {
+      "fg": "muted",
+      "bg": "glass-over-sage",
+      "size": "body"
+    },
+    {
+      "fg": "muted",
+      "bg": "glass-over-mocha",
+      "size": "body"
+    },
+    {
+      "fg": "sage-deep",
+      "bg": "glass-over-sage",
+      "size": "body"
+    },
+    {
+      "fg": "mocha-deep",
+      "bg": "glass-over-mocha",
+      "size": "body"
+    },
+    {
+      "fg": "paper",
+      "bg": "ink-deep",
+      "size": "body"
+    },
+    {
+      "fg": "paper",
+      "bg": "glass-dark",
+      "size": "body"
+    },
+    {
+      "fg": "sage",
+      "bg": "ink-deep",
+      "size": "body"
+    },
+    {
+      "fg": "sage",
+      "bg": "glass-dark",
+      "size": "body"
+    },
+    {
+      "fg": "mocha",
+      "bg": "ink-deep",
+      "size": "body"
+    },
+    {
+      "fg": "paper",
+      "bg": "ink",
+      "size": "body"
+    },
+    {
+      "fg": "ink",
+      "bg": "sage",
+      "size": "body"
+    },
+    {
+      "fg": "ink",
+      "bg": "mocha",
+      "size": "body"
+    },
+    {
+      "fg": "ink",
+      "bg": "nav-glass-over-ink-deep",
+      "size": "body"
+    },
+    {
+      "fg": "paper",
+      "bg": "glass-dark-over-orb",
+      "size": "body"
+    },
+    {
+      "fg": "sage",
+      "bg": "glass-dark-over-orb",
+      "size": "body"
+    },
+    {
+      "fg": "ink",
+      "bg": "glass-photo-worst",
+      "size": "body"
+    },
+    {
+      "fg": "muted",
+      "bg": "glass-photo-worst",
+      "size": "body"
+    },
+    {
+      "fg": "sage-deep",
+      "bg": "glass-photo-worst",
+      "size": "body"
+    },
+    {
+      "fg": "mocha-deep",
+      "bg": "glass-photo-worst",
+      "size": "body"
+    },
+    {
+      "fg": "ink",
+      "bg": "glass-photo-ink-worst",
+      "size": "body"
+    }
+  ],
+  "_notes": [
+    "glass-photo-* grounds are white glass composited over PURE BLACK — a bound, not a sample. Any photograph under the glass is lighter, so these pairs hold regardless of image or layout. .86 carries every text colour; .66 carries ink only (caption pills)."
+  ]
+}

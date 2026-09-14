@@ -1,0 +1,26 @@
+/* Centred on the panel at rest (translate 0,0 = middle), sized to the panel's
+   longer side so the light can reach every corner. Painted once; only the
+   transform moves. White only ever brightens the glass, so every measured
+   text pair under it gets better, never worse. */
+.sheen {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  width: 46rem;
+  aspect-ratio: 1;
+  margin: -23rem 0 0 -23rem;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 0.18) 38%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  mix-blend-mode: soft-light;
+}
+
+.sheen[data-still="true"] {
+  translate: -30% -34%;
+}

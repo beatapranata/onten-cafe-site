@@ -1,0 +1,117 @@
+.section {
+  background: var(--paper);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2.5rem, 6vw, 6rem);
+  align-items: center;
+}
+
+.copy {
+  display: grid;
+  gap: 1.4rem;
+  justify-items: start;
+}
+
+.h2 {
+  font-size: var(--step-4);
+  max-width: 11ch;
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.cardWrap {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Portrait: the source is a 3:4 phone shot, and the window wall is the
+   subject — a landscape crop cut it off at the mullions. */
+.photo {
+  aspect-ratio: 4 / 4.8;
+  box-shadow: 0 30px 60px -30px rgba(45, 48, 46, 0.35);
+}
+
+/* In flow under the photo, pulled up by a fixed 7rem. An absolutely placed
+   card overlapped by however tall its content happened to be — it covered
+   60% of the photo at desktop. A fixed pull means the overlap can't grow
+   when an address line wraps. */
+.cardReveal {
+  position: relative;
+  z-index: 2;
+  width: min(26rem, 82%);
+  margin: -7rem 0 0 clamp(-3rem, -4vw, -1rem);
+}
+
+.card {
+  display: block;
+  font-style: normal;
+  border-radius: var(--radius-lg);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  color: var(--ink);
+}
+
+.list {
+  display: grid;
+  gap: 1.3rem;
+}
+
+.list > div {
+  display: grid;
+  gap: 0.3rem;
+  padding-top: 1.3rem;
+  border-top: 1px solid var(--hairline);
+}
+
+.list > div:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.list dt {
+  color: var(--sage-deep);
+  font-size: 0.64rem;
+}
+
+.list dd {
+  font-size: var(--step-1);
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+.list dd a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: var(--hairline-strong);
+  transition: text-decoration-color var(--dur) var(--ease-out);
+}
+
+.list dd a:hover {
+  text-decoration-color: currentColor;
+}
+
+/* inline-block + padding lifts the link to a 24px target (it measured 23) */
+.inline {
+  display: inline-block;
+  padding-block: 0.15rem;
+  font-size: var(--step-0);
+  color: var(--sage-deep);
+}
+
+/* Broke at ~880px: the address wrapped to three lines inside a half-width card. */
+@media (max-width: 55rem) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .cardReveal {
+    width: calc(100% - 1.5rem);
+    margin: -4rem auto 0;
+  }
+}

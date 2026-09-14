@@ -1,0 +1,54 @@
+.band {
+  position: relative;
+  /* Inset by the gutter and rounded, rather than edge to edge: an Apple-calm
+     full-bleed. A hard-edged band read like a stock banner against the
+     soft radii everywhere else. */
+  padding-inline: clamp(0.75rem, 2vw, 1.5rem);
+  background: var(--paper);
+}
+
+.photo {
+  height: clamp(30rem, 82svh, 52rem);
+}
+
+.overlay {
+  position: absolute;
+  inset: auto 0 clamp(1.5rem, 4vw, 3rem);
+  pointer-events: none;
+}
+
+.note {
+  pointer-events: auto;
+  width: fit-content;
+  max-width: 100%;
+  display: grid;
+  gap: 0.7rem;
+  padding: clamp(1.25rem, 2.6vw, 1.9rem) clamp(1.4rem, 3vw, 2.2rem);
+  border-radius: var(--radius-lg);
+  color: var(--ink);
+}
+
+.headline {
+  font-size: var(--step-4);
+  line-height: 0.95;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.8rem;
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+
+.meta :global(.caps) {
+  color: var(--sage-deep);
+}
+
+/* Broke at ~480px: at 82svh the portrait-ish crop lost both faces. */
+@media (max-width: 30rem) {
+  .photo {
+    height: 30rem;
+  }
+}

@@ -1,0 +1,81 @@
+.wrap {
+  position: fixed;
+  inset: 0.9rem 0 auto;
+  z-index: 800;
+  display: flex;
+  justify-content: center;
+  padding-inline: var(--gutter);
+  pointer-events: none;
+}
+
+.pill {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2.5vw, 2.25rem);
+  width: min(100%, 56rem);
+  padding: 0.45rem 0.45rem 0.45rem 1.35rem;
+  border-radius: 999px;
+}
+
+/* Denser than the base glass on purpose — see Nav.tsx; the measured ground is
+   nav-glass-over-ink-deep in design/palette.json.
+   The :global(.glass) compound is load-bearing, not tidy-up bait: a bare
+   .pill ties with the global .glass on specificity and LOST in the browser
+   (computed .52, which fails over the ON10 section). Two classes win. */
+.pill:global(.glass) {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.brand {
+  display: inline-flex;
+  color: var(--ink);
+}
+
+.links {
+  display: flex;
+  gap: clamp(0.9rem, 2.4vw, 2rem);
+  margin-inline: auto;
+}
+
+.links a {
+  position: relative;
+  color: var(--ink);
+  font-size: 0.7rem;
+  padding-block: 0.5rem;
+}
+
+/* underline draws with scaleX, not background-size — transform only */
+.links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0.24em;
+  bottom: 0.3rem;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.links a:hover::after {
+  transform: scaleX(1);
+}
+
+.cta {
+  min-height: 2.6rem;
+  padding: 0.7em 1.25em;
+}
+
+/* Broke at ~720px once "Inside" made it five links: the wordmark itself
+   wrapped to two lines. Below that the section links go; the pill keeps
+   brand + directions. */
+@media (max-width: 47rem) {
+  .links {
+    display: none;
+  }
+  .cta {
+    margin-left: auto;
+  }
+}

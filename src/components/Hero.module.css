@@ -1,0 +1,155 @@
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding-block: clamp(7rem, 14vh, 9rem) clamp(4rem, 8vh, 6rem);
+  overflow: clip;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1.08fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+
+.copy {
+  display: grid;
+  gap: 1.6rem;
+  justify-items: start;
+}
+
+.h1 {
+  font-size: var(--step-5);
+  max-width: 10ch;
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 0.4rem;
+}
+
+/* ---- the stage ---------------------------------------------------------- */
+
+.stage {
+  position: relative;
+  /* room on the left for the inset to hang past the frame */
+  padding-left: clamp(0rem, 4vw, 3.5rem);
+}
+
+/* A little sage light spilling past the photo's corner, so the frame sits in
+   the page instead of being pasted onto it. Pre-blurred gradient, static. */
+.orb {
+  position: absolute;
+  z-index: -1;
+  width: 70%;
+  aspect-ratio: 1;
+  left: -18%;
+  bottom: -22%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--sage), rgba(183, 205, 185, 0));
+  pointer-events: none;
+}
+
+/* 5:6 portrait crop of a 3:2 source. At the widest this frame renders
+   (~600px), the crop keeps ~1.4× source density — the floor for the image
+   to stay crisp on a retina screen. Don't widen it past that. */
+.photo {
+  aspect-ratio: 5 / 6;
+  box-shadow: 0 30px 60px -30px rgba(45, 48, 46, 0.35);
+}
+
+.inset {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  bottom: -6%;
+  width: clamp(8rem, 14vw, 12.5rem);
+  padding: 0.45rem;
+  border-radius: calc(var(--radius) + 0.45rem);
+  background: var(--paper);
+  box-shadow: 0 1px 2px rgba(45, 48, 46, 0.08), 0 24px 48px -20px rgba(45, 48, 46, 0.4);
+  /* a print, set down slightly off-square */
+  rotate: -3deg;
+}
+
+.insetFrame {
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius);
+}
+
+.chip {
+  position: absolute;
+  z-index: 3;
+  right: 5%;
+  top: 5%;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  color: var(--ink);
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  white-space: nowrap;
+}
+
+.ratingValue {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+/* stars are decorative (aria-hidden); the number and count carry the fact */
+.stars {
+  color: var(--mocha-deep);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+
+.ratingMeta {
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+
+/* Broke at ~920px: the headline's 10ch column squeezed the serif into four
+   lines beside a photo that dropped under 22rem. Stack instead. */
+@media (max-width: 57.5rem) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .stage {
+    width: min(100%, 34rem);
+    margin-inline: auto;
+    padding-left: 0;
+  }
+  .photo {
+    aspect-ratio: 4 / 3.6;
+  }
+  .inset {
+    left: -0.5rem;
+    width: clamp(7rem, 30vw, 10rem);
+  }
+  .chip {
+    right: 0.75rem;
+    top: 0.75rem;
+  }
+}
+
+/* The attribution never hides — a bare "4.9" with no source reads as a claim
+   of our own. On a phone it wraps under the stars instead. */
+@media (max-width: 26rem) {
+  .chip {
+    left: 0.75rem;
+    right: auto;
+    border-radius: var(--radius);
+  }
+  .rating {
+    flex-wrap: wrap;
+    white-space: normal;
+    row-gap: 0.1rem;
+  }
+}

@@ -1,0 +1,175 @@
+.section {
+  background: var(--paper);
+}
+
+.head {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  align-items: end;
+  gap: 1.5rem clamp(2rem, 6vw, 6rem);
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.headText {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.h2 {
+  font-size: var(--step-4);
+}
+
+.intro {
+  color: var(--muted);
+  max-width: 40ch;
+  text-wrap: pretty;
+  /* optical: the paragraph's last line should sit on the headline's baseline,
+     and the serif's descenders hang lower than the sans's */
+  padding-bottom: 0.35em;
+}
+
+/* ---- the stage ---------------------------------------------------------- */
+
+.stage {
+  position: relative;
+}
+
+/* The source is 1360px wide and this frame can render wider than that. It
+   only works because the crisp part is the strip left of the panel — the
+   rest is frosted behind glass, where resolution doesn't read. */
+.photo {
+  aspect-ratio: 16 / 9;
+  min-height: 34rem;
+}
+
+.panel {
+  position: absolute;
+  z-index: 2;
+  top: clamp(1rem, 2.5vw, 2rem);
+  right: clamp(1rem, 2.5vw, 2rem);
+  bottom: clamp(1rem, 2.5vw, 2rem);
+  width: min(58%, 44rem);
+  border-radius: calc(var(--radius-lg) - 0.5rem);
+  /* the sheen is larger than the pane; the pane is the window it shows through */
+  overflow: hidden;
+  display: flex;
+}
+
+.list {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.55rem;
+  padding: clamp(1.25rem, 2.6vw, 2.25rem);
+}
+
+/* Hairline cross: right rule on the left column, top rule on the bottom row. */
+.item:nth-child(odd) {
+  border-right: 1px solid var(--hairline);
+}
+
+.item:nth-child(n + 3) {
+  border-top: 1px solid var(--hairline);
+}
+
+.index {
+  margin-bottom: auto;
+  font-size: var(--step--2);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--sage-deep);
+  font-variant-numeric: tabular-nums;
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.name {
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+  font-weight: 400;
+  font-size: var(--step-3);
+  line-height: 0.98;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.price {
+  font-size: var(--step--1);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--mocha-deep);
+  white-space: nowrap;
+}
+
+.parts {
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+.plus {
+  color: var(--mocha-deep);
+}
+
+/* Broke at ~1100px: the panel's 2×2 cells narrowed until "Coconuts About You"
+   set in three lines. One column of four rows from here, still over the photo. */
+@media (max-width: 69rem) {
+  .panel {
+    width: min(62%, 30rem);
+  }
+  .list {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, auto);
+  }
+  .item:nth-child(odd) {
+    border-right: 0;
+  }
+  .item:nth-child(n + 2) {
+    border-top: 1px solid var(--hairline);
+  }
+  .item {
+    padding-block: clamp(1rem, 1.8vw, 1.4rem);
+  }
+  .index {
+    margin-bottom: 0;
+  }
+  .name {
+    font-size: var(--step-2);
+  }
+  .photo {
+    min-height: 40rem;
+  }
+}
+
+/* Broke at ~900px: the header's two columns fought, and at 62% the panel left
+   too thin a strip of photo to read as anything. Photo becomes a band; the
+   pane rides up over its lower edge. */
+@media (max-width: 56rem) {
+  .head {
+    grid-template-columns: 1fr;
+  }
+  .photo {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+  }
+  .panel {
+    position: relative;
+    inset: auto;
+    width: calc(100% - 1.5rem);
+    margin: -5rem auto 0;
+  }
+}

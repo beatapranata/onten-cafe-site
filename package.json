@@ -1,0 +1,25 @@
+{
+  "name": "onten-cafe-site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3620",
+    "build": "next build",
+    "start": "next start -p 3621",
+    "typecheck": "tsc --noEmit",
+    "contrast": "node design/contrast.mjs design/palette.json --strict"
+  },
+  "dependencies": {
+    "motion": "^12.23.0",
+    "next": "^16.0.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^5"
+  },
+  "browserslist": ["chrome >= 111", "edge >= 111", "safari >= 16.4", "firefox >= 128"]
+}

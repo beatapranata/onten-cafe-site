@@ -1,0 +1,509 @@
+/* ==========================================================================
+   Cafe Onten — design system
+
+   Sampled, not picked (full provenance in design/SYSTEM.md):
+     paper      the printed menu card stock
+     paper-alt  teak shelving light bouncing off the white walls — the room's
+                own pastel mocha
+     ink        the ONTEN CAFE wordmark, read as the dark grey it prints at
+     sage       the potted trees in the Google listing photo, and the thin
+                green rules on the menu board
+     mocha      the teak menu cabinet, lifted to pastel
+
+   Contrast is measured, not asserted: `npm run contrast`. Two rules the
+   matrix forces that are easy to break:
+     • On a raw sage or mocha fill, ONLY --ink is legible. --muted, --sage-deep
+       and --mocha-deep all land ~4.0:1 there.
+     • The nav glass sits over the dark ON10 section too; over that ground
+       --muted drops to 4.40. The nav carries --ink only.
+
+   Motion rule: transform and opacity only. The glass is expensive enough.
+   ========================================================================== */
+
+:root {
+  /* ---- Sampled ---------------------------------------------------------- */
+  --paper: #fcfbf8;
+  --paper-alt: #f3ede5;
+  --ink: #2d302e;
+  --ink-deep: #1f2321;
+  --muted: #5a5e5a;
+  --sage: #b7cdb9;
+  --sage-deep: #3b654a;
+  --mocha: #dcc6ae;
+  --mocha-deep: #77533a;
+
+  --hairline: rgba(45, 48, 46, 0.14);
+  --hairline-strong: rgba(45, 48, 46, 0.24);
+  --hairline-dark: rgba(252, 251, 248, 0.16);
+  --on-dark: var(--paper);
+  --on-dark-muted: rgba(252, 251, 248, 0.74);
+
+  /* ---- Type -------------------------------------------------------------- */
+  --step--2: clamp(0.72rem, 0.7rem + 0.1vw, 0.78rem);
+  --step--1: clamp(0.84rem, 0.8rem + 0.16vw, 0.94rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.12rem);
+  --step-1: clamp(1.2rem, 1.1rem + 0.45vw, 1.5rem);
+  --step-2: clamp(1.5rem, 1.3rem + 1vw, 2.2rem);
+  --step-3: clamp(2rem, 1.6rem + 2vw, 3.2rem);
+  --step-4: clamp(2.6rem, 1.9rem + 3.4vw, 4.6rem);
+  /* The hero is text-led over a quiet ground, but the display face is a
+     light, high-contrast serif — it needs size to carry, so the top step is
+     pushed harder than an editorial default. */
+  --step-5: clamp(3.2rem, 2rem + 6vw, 7.2rem);
+
+  /* ---- Rhythm ------------------------------------------------------------
+     Radius is register: 20–32px reads soft, friendly, product-polished — the
+     Apple-Park calm the room itself has (rounded plaster, no hard corners in
+     the furniture). Pills for anything you press. */
+  --gutter: clamp(1.25rem, 4vw, 3.5rem);
+  --section-y: clamp(5.5rem, 11vw, 10rem);
+  --maxw: 80rem;
+  --radius-sm: 0.875rem;
+  --radius: 1.5rem;
+  --radius-lg: 2.25rem;
+
+  /* ---- Motion ------------------------------------------------------------ */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 0.25s;
+  --dur: 0.45s;
+  --dur-slow: 0.8s;
+
+  /* ---- Glass -------------------------------------------------------------
+     Real glass: the fill genuinely transmits, the edge is a 1px lens (light
+     along the top, a darker line along the bottom), and the lift is a soft
+     shadow. Every edge treatment stays within ~2px — thicker reads as a
+     bezel, and that's what makes glass attempts look like brushed metal. */
+  --glass-fill: rgba(255, 255, 255, 0.52);
+  --glass-edge: inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(45, 48, 46, 0.08),
+    inset 1px 0 0 rgba(255, 255, 255, 0.5),
+    inset -1px 0 0 rgba(255, 255, 255, 0.35);
+  /* The rim light is the one exception to the 2px rule, and it's allowed
+     because it's soft and white: a hard edge that wide reads as a bezel, a
+     diffuse inner glow reads as thickness. It only ever lightens the glass,
+     so no measured text pair gets worse. */
+  --glass-rim: inset 0 0 14px rgba(255, 255, 255, 0.4);
+  --glass-lift: 0 1px 2px rgba(45, 48, 46, 0.06),
+    0 18px 44px -18px rgba(45, 48, 46, 0.28);
+  --glass-backdrop: blur(18px) saturate(1.7) brightness(1.04);
+
+  --glass-dark-fill: rgba(255, 255, 255, 0.08);
+  --glass-dark-edge: inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.35);
+}
+
+/* ------------------------------------------------------------ reset */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  /* Clears the floating nav so anchors never land under it. */
+  scroll-padding-top: 6.5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Scoped to anchor navigation: unconditional smooth scrolling also animates
+     the browser's own restores and hot-reload jumps. */
+  html:has(:target) {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--step-0);
+  font-weight: 400;
+  line-height: 1.6;
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+::selection {
+  background: var(--sage);
+  color: var(--ink);
+}
+
+:focus-visible {
+  /* sage-deep clears 3:1 against paper, paper-alt and the glass grounds; on
+     the dark section the ring flips to sage below. */
+  outline: 2.5px solid var(--sage-deep);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+[data-ground="dark"] :focus-visible {
+  outline-color: var(--sage);
+}
+
+/* --------------------------------------------------------------- type */
+
+.display {
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.display em {
+  font-style: italic;
+  /* Italic is the one warm note in the headline — mocha-deep holds 6.58:1 on
+     paper and 5.86 on paper-alt, so it can carry the accent word at any
+     display size. */
+  color: var(--mocha-deep);
+}
+
+[data-ground="dark"] .display em {
+  color: var(--mocha);
+}
+
+/* Brand caps: the wordmark's own geometric voice, promoted to nav, buttons,
+   eyebrows and labels so the logo carries through everything. */
+.caps {
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 500;
+  font-size: var(--step--2);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75em;
+  color: var(--sage-deep);
+}
+
+/* The menu board's own device: a thin rule either side of a caps label. */
+.eyebrow::before {
+  content: "";
+  width: 1.75em;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+[data-ground="dark"] .eyebrow {
+  color: var(--sage);
+}
+
+.lede {
+  font-size: var(--step-1);
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 44ch;
+  text-wrap: pretty;
+}
+
+[data-ground="dark"] .lede {
+  color: var(--on-dark-muted);
+}
+
+/* ------------------------------------------------------------- layout */
+
+.shell {
+  width: min(100% - var(--gutter) * 2, var(--maxw));
+  margin-inline: auto;
+}
+
+.section {
+  position: relative;
+  padding-block: var(--section-y);
+}
+
+/* ==========================================================================
+   Liquid glass — the material
+
+   NO SVG displacement lens. One was built — backdrop-filter:
+   url(#lens) blur() saturate() — and verified in Chromium to drop the ENTIRE
+   chain, blur included: the hero headline read crisply through the nav. The
+   skill's traps list documents this for Safari; it happens in Chromium too,
+   and Firefox never parses url() there at all. So it refracted nothing in
+   any engine and made the glass see-through. Don't reintroduce it.
+
+   The "liquid" comes from what does render everywhere: saturate + brighten
+   the backdrop, a 1px lens line top and bottom, and a soft inner light that
+   pools at the rim the way a thick pane gathers light at its edge.
+   Never transition backdrop-filter: some engines drop it mid-transition.
+   ========================================================================== */
+
+.glass {
+  position: relative;
+  isolation: isolate;
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+  box-shadow: var(--glass-edge), var(--glass-rim), var(--glass-lift);
+}
+
+/* Specular sheen: one soft diagonal blade near the top-left corner, not a
+   metallic wash across the whole face. */
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    128deg,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 0.12) 22%,
+    rgba(255, 255, 255, 0) 38%,
+    rgba(255, 255, 255, 0) 78%,
+    rgba(255, 255, 255, 0.18) 100%
+  );
+}
+
+[data-ground="dark"] .glass,
+.glass-dark {
+  background: var(--glass-dark-fill);
+  box-shadow: var(--glass-dark-edge), 0 24px 50px -24px rgba(0, 0, 0, 0.6);
+}
+
+[data-ground="dark"] .glass::before,
+.glass-dark::before {
+  background: linear-gradient(
+    128deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0) 32%,
+    rgba(255, 255, 255, 0) 84%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+}
+
+/* Glass over photography. A photo has no single colour, so these fills are
+   measured against PURE BLACK as a bound (glass-photo-* in palette.json):
+   whatever the image and wherever the layout puts the glass, the real ground
+   is lighter than the bound.
+     .glass-photo    .86 — every text colour holds AA (muted lowest, 4.76)
+     .glass-caption  .66 — INK ONLY (5.61); muted/sage/mocha fail at 2.8
+   The pairing selectors are two classes on purpose: they must beat the base
+   .glass fill, which a single class ties with. */
+.glass.glass-photo {
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.glass.glass-caption {
+  background: rgba(255, 255, 255, 0.66);
+  color: var(--ink);
+}
+
+/* Browsers with no backdrop-filter at all get an opaque-enough fill that the
+   measured text pairs still hold. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background: rgba(255, 255, 255, 0.9);
+  }
+  [data-ground="dark"] .glass,
+  .glass-dark {
+    background: #313533;
+  }
+}
+
+/* ==========================================================================
+   Photo frame — one device for every photograph on the site
+   ========================================================================== */
+
+.frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--paper-alt);
+  /* Safari leaks the child's corners past border-radius while a transformed
+     image animates; isolation gives the clip its own stacking context. */
+  isolation: isolate;
+}
+
+.frame img {
+  object-fit: cover;
+  transition: transform 1.2s var(--ease-out);
+}
+
+.caption-pill {
+  position: absolute;
+  left: clamp(0.6rem, 1.2vw, 0.9rem);
+  bottom: clamp(0.6rem, 1.2vw, 0.9rem);
+  z-index: 2;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.62rem;
+  line-height: 1;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7em;
+  min-height: 3.1rem;
+  padding: 0.95em 1.7em;
+  border-radius: 999px;
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  transition: background-color var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-ink {
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 12px 28px -14px rgba(31, 35, 33, 0.55);
+}
+
+.btn-ink:hover {
+  background: var(--ink-deep);
+}
+
+/* The arrow travels, the label doesn't — so the hover reads as direction. */
+.btn .arrow {
+  display: inline-block;
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.btn:hover .arrow {
+  transform: translateX(3px);
+}
+
+.btn-glass {
+  color: var(--ink);
+}
+
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.72);
+}
+
+[data-ground="dark"] .btn-glass {
+  color: var(--paper);
+}
+
+[data-ground="dark"] .btn-glass:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* --------------------------------------------------------------- misc */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 2000;
+  padding: 0.7rem 1.2rem;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: var(--step--1);
+  translate: 0 -200%;
+  transition: translate var(--dur) var(--ease-out);
+}
+
+.skip-link:focus-visible {
+  translate: 0 0;
+}
+
+/* Word masks for SplitText. Padded past the em box so the serif's italic
+   overhang and descenders are never sheared; matching negative margins hand
+   the space back. The clip is dropped once the reveal completes. */
+.word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: baseline;
+  padding: 0.2em 0.1em 0.3em;
+  margin: -0.2em -0.1em -0.3em;
+}
+
+.word-mask[data-done="true"] {
+  overflow: visible;
+}
+
+.word-inner {
+  display: inline-block;
+}
+
+/* Static paper tooth. Clean-premium register, so it barely registers —
+   it's there to stop the glass reading as a flat vector on a flat screen.
+   Never animated: animated grain is one of the biggest jank sources there is. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-size: 220px 220px;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

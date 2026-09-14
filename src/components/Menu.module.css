@@ -1,0 +1,169 @@
+.section {
+  background: var(--paper-alt);
+}
+
+.head {
+  display: grid;
+  gap: 1.1rem;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.h2 {
+  font-size: var(--step-4);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+
+.groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 4vw, 3rem);
+}
+
+.groupTitle {
+  color: var(--sage-deep);
+  padding-bottom: 0.8rem;
+  margin-bottom: 0.4rem;
+  border-bottom: 1px solid var(--hairline-strong);
+}
+
+.items {
+  display: grid;
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding-block: 0.6rem;
+}
+
+.itemName {
+  font-size: var(--step-0);
+}
+
+.note {
+  color: var(--muted);
+  font-size: var(--step--1);
+}
+
+.leader {
+  flex: 1;
+  min-width: 1rem;
+  /* sits on the baseline, not the x-height: the translate lifts it off the
+     box bottom to where a printed leader would be */
+  border-bottom: 1px dotted var(--hairline-strong);
+  transform: translateY(-0.28em);
+}
+
+.itemPrice {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+/* ---- the add-ons card --------------------------------------------------- */
+
+.addWrap {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Glass over a flat ground is just a grey box. The card gets its own soft
+   light to bend: pre-blurred gradients, static here — the hero already has
+   the moving light, and this section should be quiet. */
+.orb {
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.orbSage {
+  width: 70%;
+  aspect-ratio: 1;
+  right: -10%;
+  top: -14%;
+  background: radial-gradient(closest-side, var(--sage), rgba(183, 205, 185, 0));
+}
+
+.orbMocha {
+  width: 64%;
+  aspect-ratio: 1;
+  left: -12%;
+  bottom: -16%;
+  background: radial-gradient(closest-side, var(--mocha), rgba(220, 198, 174, 0));
+}
+
+.addCard {
+  border-radius: var(--radius-lg);
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.addTitle {
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+  font-weight: 400;
+  font-size: var(--step-3);
+  line-height: 1;
+  letter-spacing: -0.015em;
+  margin-bottom: 1.5rem;
+}
+
+.addTitle em {
+  color: var(--mocha-deep);
+}
+
+.addList {
+  display: grid;
+  gap: 1.15rem;
+}
+
+.addGroup {
+  display: grid;
+  gap: 0.3rem;
+  padding-top: 1.15rem;
+  border-top: 1px solid var(--hairline);
+}
+
+.addGroup:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.addGroup dt {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--sage-deep);
+  font-size: 0.66rem;
+}
+
+.addPrice {
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.addGroup dd {
+  font-size: var(--step-0);
+  line-height: 1.45;
+}
+
+/* Broke at ~980px: the card squeezed to 18rem and the syrup list wrapped to
+   four lines beside a menu that no longer fit two columns. */
+@media (max-width: 61rem) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 34rem) {
+  .groups {
+    grid-template-columns: 1fr;
+  }
+}

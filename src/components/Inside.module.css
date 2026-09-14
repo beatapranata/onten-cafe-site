@@ -1,0 +1,151 @@
+.section {
+  background: var(--paper);
+}
+
+/* An editorial 12-column grid rather than a uniform gallery: mixed spans and
+   one staggered tile, so the room reads as a sequence of looks, not a
+   thumbnail sheet. Each tile's aspect ratio is chosen from its source
+   orientation — portraits stay portrait, so no photo is cropped past ~30%. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(0.75rem, 1.6vw, 1.25rem);
+  align-items: start;
+}
+
+.intro {
+  grid-column: 1 / span 5;
+  align-self: center;
+  display: grid;
+  gap: 1.2rem;
+  justify-items: start;
+  padding-right: clamp(0rem, 3vw, 3rem);
+}
+
+.h2 {
+  font-size: var(--step-4);
+}
+
+.tile {
+  margin: 0;
+}
+
+.frame {
+  width: 100%;
+  height: 100%;
+}
+
+.tile:hover .frame img {
+  transform: scale(1.035);
+}
+
+/* Row 1 — intro beside the pour */
+.t1 {
+  grid-column: 6 / span 7;
+}
+.t1 .frame {
+  aspect-ratio: 3 / 2;
+}
+
+/* Row 2 — the long table (portrait) against the barista (landscape) */
+.t2 {
+  grid-column: 1 / span 4;
+}
+.t2 .frame {
+  aspect-ratio: 3 / 4;
+}
+.t3 {
+  grid-column: 5 / span 8;
+  align-self: end;
+}
+.t3 .frame {
+  aspect-ratio: 16 / 10;
+}
+
+/* Row 3 — case, ceramics (dropped a step), bar detail */
+.t4 {
+  grid-column: 1 / span 5;
+}
+.t4 .frame {
+  aspect-ratio: 4 / 5;
+}
+.t5 {
+  grid-column: 6 / span 4;
+  margin-top: clamp(2rem, 7vw, 6rem);
+}
+.t5 .frame {
+  aspect-ratio: 3 / 4;
+}
+.t6 {
+  grid-column: 10 / span 3;
+}
+.t6 .frame {
+  aspect-ratio: 3 / 4;
+}
+
+/* Row 4 — the counter beside the olive tree */
+.t7 {
+  grid-column: 1 / span 7;
+}
+.t7 .frame {
+  aspect-ratio: 3 / 2;
+}
+/* 16:15 is solved, not picked: a 7-column 3:2 tile beside a 5-column tile
+   share a height when the narrow one is ~1.07:1. The row reads as a pair. */
+.t8 {
+  grid-column: 8 / span 5;
+}
+.t8 .frame {
+  aspect-ratio: 16 / 15;
+}
+
+/* Row 5 — the USE LAST shots, last by design, and mirrored so it doesn't
+   echo row 4's rhythm */
+.t9 {
+  grid-column: 1 / span 5;
+}
+.t9 .frame {
+  aspect-ratio: 16 / 15;
+}
+.t10 {
+  grid-column: 6 / span 7;
+}
+.t10 .frame {
+  aspect-ratio: 3 / 2;
+}
+
+/* Broke at ~770px: the 3-column tiles in row 3 fell under 11rem and their
+   caption pills covered half the image. Two columns from here. */
+@media (max-width: 48rem) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .intro,
+  .t1,
+  .t2,
+  .t3,
+  .t4,
+  .t7,
+  .t8,
+  .t9,
+  .t10 {
+    grid-column: 1 / -1;
+  }
+  .t5,
+  .t6 {
+    grid-column: auto;
+    margin-top: 0;
+  }
+  .intro {
+    padding-right: 0;
+    margin-bottom: 1rem;
+  }
+  .t2 .frame,
+  .t4 .frame {
+    aspect-ratio: 4 / 3;
+  }
+  .t8 .frame,
+  .t9 .frame {
+    aspect-ratio: 4 / 5;
+  }
+}

@@ -1,0 +1,140 @@
+.section {
+  background: var(--ink-deep);
+  color: var(--on-dark);
+  overflow: clip;
+}
+
+/* A dim sage light for the dark glass to bend. Held at .20 so the measured
+   ground (glass-dark-over-orb, paper at 7.53:1) is the worst case. */
+.glow {
+  position: absolute;
+  width: 60rem;
+  max-width: 120%;
+  aspect-ratio: 1;
+  right: -18rem;
+  top: 50%;
+  translate: 0 -50%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(183, 205, 185, 0.2), rgba(183, 205, 185, 0));
+  pointer-events: none;
+}
+
+.layout {
+  position: relative;
+  display: grid;
+  grid-template-columns: 0.78fr 1.22fr;
+  gap: clamp(2.5rem, 6vw, 6rem);
+  align-items: center;
+}
+
+/* The sign itself, in the room. Portrait source, portrait frame — the only
+   light photograph in the dark section, so it reads as a window into the
+   same bright room the rest of the site lives in. */
+.photo {
+  aspect-ratio: 4 / 5.4;
+  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.8);
+}
+
+.main {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3rem);
+}
+
+.copy {
+  display: grid;
+  gap: 1.4rem;
+  justify-items: start;
+}
+
+.h2 {
+  font-size: var(--step-4);
+  max-width: 12ch;
+}
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2.5rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--hairline-dark);
+}
+
+.facts li {
+  display: grid;
+  gap: 0.3rem;
+  font-size: var(--step-1);
+}
+
+.facts :global(.caps) {
+  color: var(--sage);
+  font-size: 0.64rem;
+}
+
+.sets {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.set {
+  border-radius: var(--radius-lg);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.setHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--hairline-dark);
+}
+
+.setName {
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+  font-weight: 400;
+  font-size: var(--step-3);
+  line-height: 1;
+  text-transform: capitalize;
+}
+
+.setPrice {
+  font-size: var(--step-1);
+  font-variant-numeric: tabular-nums;
+  color: var(--mocha);
+}
+
+.rolls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-top: 1.1rem;
+}
+
+.rolls li {
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--hairline-dark);
+  font-size: var(--step--1);
+  color: var(--on-dark-muted);
+}
+
+/* Broke at ~1150px: side by side, each set card narrowed until the six roll
+   chips wrapped to four rows. Stacked from here. */
+@media (max-width: 72rem) {
+  .sets {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Broke at ~900px: the photo column dropped under 17rem beside a headline
+   that needed the width. Photo becomes a band above the copy. */
+@media (max-width: 56rem) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .photo {
+    aspect-ratio: 4 / 3;
+  }
+}
