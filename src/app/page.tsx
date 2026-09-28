@@ -1,5 +1,6 @@
 import { Hero } from "@/components/Hero";
 import { Signatures } from "@/components/Signatures";
+import { Featured } from "@/components/Featured";
 import { Linger } from "@/components/Linger";
 import { Menu } from "@/components/Menu";
 import { Inside } from "@/components/Inside";
@@ -11,6 +12,7 @@ export default function Home() {
     <>
       <Hero />
       <Signatures />
+      <Featured />
       <Linger />
       <Menu />
       <Inside />

@@ -161,6 +161,51 @@ export const ADD_ONS = {
   },
 } as const;
 
+/* [menu] Featured pairings. Each one is a board drink plus a board add-on —
+   the seasonal syrups and the cold foams — and nothing here is its own menu
+   item, which is why the copy says to ask for it as a build. Prices are
+   derived from MENU and ADD_ONS below, so a board change can't leave a stale
+   total on the page. */
+export type Featured = {
+  base: string;
+  addOn: string;
+  /* the add-on surcharge as printed on the board */
+  surcharge: Price;
+  kind: string;
+  note: string;
+};
+
+export const FEATURED_COPY = {
+  eyebrow: "Featured right now",
+  headline: "Three builds worth asking for.",
+  body:
+    "Not printed on the board — each one is a menu drink with a seasonal syrup or a cold foam on top. Order the base and name the add-on.",
+} as const;
+
+export const FEATURED: Featured[] = [
+  {
+    base: "Iced Latte",
+    addOn: "Miso brown sugar",
+    surcharge: 0.75,
+    kind: "Seasonal syrup",
+    note: "Salt and molasses under the milk — the savoury end of the seasonal pair.",
+  },
+  {
+    base: "Flash Brew Coffee",
+    addOn: "Salted peanut foam",
+    surcharge: 1.25,
+    kind: "Cold foam",
+    note: "The In a Jiffy build without the cocoa: flash brew straight, foam on top.",
+  },
+  {
+    base: "Latte",
+    addOn: "Maple cinnamon",
+    surcharge: 0.75,
+    kind: "Seasonal syrup",
+    note: "Hot, and the one that tastes most like the season.",
+  },
+];
+
 /* [on10] */
 export const ON10 = {
   name: "ON10 Handroll Bar",
@@ -321,6 +366,7 @@ export const CREDIT = {
 
 export const NAV = [
   { href: "#signatures", label: "Signatures" },
+  { href: "#featured", label: "Featured" },
   { href: "#menu", label: "Menu" },
   { href: "#inside", label: "Inside" },
   { href: "#on10", label: "ON10" },
@@ -330,6 +376,17 @@ export const NAV = [
 /* Always two decimals: prices sit in a right-aligned column, and "$4" beside
    "$4.75" breaks it. (The handroll sets print as whole dollars on their own
    card and render directly, not through this.) */
+/* Featured totals are computed, never typed: base price off the board plus
+   the printed surcharge. Throws in dev if a base drink is renamed out from
+   under it, rather than rendering a wrong price. */
+export const basePrice = (name: string): Price => {
+  const item = MENU.flatMap((g) => g.items).find((i) => i.name === name);
+  if (!item) throw new Error(`Featured drink base "${name}" is not on the menu`);
+  return item.price;
+};
+
+export const featuredPrice = (f: Featured): Price => basePrice(f.base) + f.surcharge;
+
 export const money = (p: Price) => `$${p.toFixed(2)}`;
 
 export const addressLine = `${BUSINESS.street}, ${BUSINESS.city}, ${BUSINESS.region} ${BUSINESS.postal}`;
